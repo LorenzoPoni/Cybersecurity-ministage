@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fase 03: Brute Force — Cyber Security | Lab Pascal</title>
+  <!-- Caricamento Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fogli di stile separati -->
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/bruteforce.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+</head>
+<body class="cyber-grid-bg min-h-screen flex flex-col justify-between selection:bg-amber-400 selection:text-slate-950">
+
+  <!-- Contenitore dinamico della Barra di Navigazione -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- ========================================================================
+       CONTENUTO PRINCIPALE — FASE 03: BRUTE FORCE CON PYTHON
+       ======================================================================== -->
+  <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+
+    <!-- INTESTAZIONE FASE 03 -->
+    <section class="glass-card rounded-3xl p-5 sm:p-7">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 font-cyber-mono text-xs tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            FASE 03 // ATTACCO BRUTE FORCE
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Forzare il Cifrario con Python
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base max-w-2xl">
+            A mano ci vogliono minuti per decifrare una frase intera senza conoscere la chiave. Con un semplice ciclo <code class="font-cyber-mono text-amber-300 bg-slate-900 px-1.5 py-0.5 rounded">for</code> in <strong class="text-sky-400">Python</strong>, il computer prova tutte le <strong class="text-emerald-400">25 chiavi</strong> in meno di un millesimo di secondo!
+          </p>
+        </div>
+
+        <a href="/"
+           class="shrink-0 px-5 py-3 rounded-xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold text-sm inline-flex items-center justify-center gap-2 transition">
+          <span>&larr; Torna alla Home</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SEZIONE FRASE CIFRATA E PARAGRAFO DECODIFICATO (CITAZIONE STEVE JOBS) -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Card 1: Messaggio Cifrato Intercettato -->
+      <div class="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between space-y-4">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-cyber-mono text-xs uppercase tracking-wider text-rose-400">
+            🔒 Messaggio Intercettato (Cifrato)
+          </span>
+          <span class="font-cyber-mono text-xs px-2.5 py-1 rounded-md bg-rose-500/15 border border-rose-400/35 text-rose-300">
+            Chiave sconosciuta
+          </span>
+        </div>
+
+        <blockquote id="cipher-quote-text"
+                    class="rounded-2xl bg-slate-950/85 border border-rose-500/30 p-5 font-cyber-mono text-base sm:text-lg leading-relaxed text-rose-200 tracking-wide">
+          "AOL VUSF DHF AV KV NYLHA DVYR PZ AV SVCL DOHA FVB KV. ZAHF OBUNYF, ZAHF MVVSPZO."
+        </blockquote>
+
+        <p class="text-xs sm:text-sm text-slate-400">
+          Ogni lettera dell'alfabeto è stata spostata in avanti sempre dello stesso numero di posizioni, mentre spazi e punteggiatura sono rimasti invariati.
+        </p>
+      </div>
+
+      <!-- Card 2: Paragrafo Decodificato -->
+      <div class="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between space-y-4 border-emerald-400/40">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-cyber-mono text-xs uppercase tracking-wider text-emerald-400">
+            🔓 Paragrafo Decodificato (Chiave -07)
+          </span>
+          <span class="font-cyber-mono text-xs px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-400/40 text-emerald-300">
+            Steve Jobs
+          </span>
+        </div>
+
+        <blockquote id="plain-quote-text"
+                    class="rounded-2xl bg-slate-950/85 border border-emerald-500/35 p-5 text-base sm:text-lg font-semibold leading-relaxed text-emerald-200">
+          "THE ONLY WAY TO DO GREAT WORK IS TO LOVE WHAT YOU DO. STAY HUNGRY, STAY FOOLISH."
+        </blockquote>
+
+        <p class="text-xs sm:text-sm text-slate-300 italic">
+          Traduzione: «L'unico modo per fare un ottimo lavoro è amare ciò che fai. Siate affamati, siate folli.» — <strong class="not-italic text-white">Steve Jobs</strong>
+        </p>
+      </div>
+
+    </section>
+
+    <!-- SEZIONE FINESTRA CODICE PYTHON + TERMINALE DI OUTPUT -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+      <!-- FINESTRELLA CODICE PYTHON (7 colonne) -->
+      <div class="lg:col-span-7 python-window rounded-3xl overflow-hidden flex flex-col justify-between">
+        <!-- Barra superiore stile editor IDE -->
+        <div class="python-window-bar px-4 py-3 flex items-center justify-between gap-3 border-b border-slate-800">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500/90"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-400/90"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500/90"></span>
+            <span class="ml-2 font-cyber-mono text-xs text-slate-300 font-semibold">
+              🐍 brute_force_cesare.py
+            </span>
+          </div>
+
+          <button type="button" id="btn-copy-python"
+                  class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 font-cyber-mono text-xs text-slate-300 hover:text-white transition cursor-pointer">
+            📋 Copia codice
+          </button>
+        </div>
+
+        <!-- Codice Python evidenziato -->
+        <div class="p-4 sm:p-6 overflow-x-auto flex-1 bg-[#070b14]">
+          <pre id="python-code-block" class="font-cyber-mono text-xs sm:text-sm leading-relaxed text-slate-200"><code><span class="py-var">alfabeto</span> <span class="py-op">=</span> <span class="py-str">"ABCDEFGHIJKLMNOPQRSTUVWXYZ"</span>
+<span class="py-var">frase_cifrata</span> <span class="py-op">=</span> <span class="py-str">"AOL VUSF DHF AV KV NYLHA DVYR PZ AV SVCL DOHA FVB KV. ZAHF OBUNYF, ZAHF MVVSPZO."</span>
+
+<span class="py-comment"># Ciclo for per provare tutte le 25 chiavi possibili (Brute Force)</span>
+<span class="py-kw">for</span> <span class="py-var">chiave</span> <span class="py-kw">in</span> <span class="py-fn">range</span>(<span class="py-num">1</span>, <span class="py-num">26</span>):
+    <span class="py-var">frase_decifrata</span> <span class="py-op">=</span> <span class="py-str">""</span>
+
+    <span class="py-comment"># Scorro ogni singolo carattere della frase cifrata</span>
+    <span class="py-kw">for</span> <span class="py-var">lettera</span> <span class="py-kw">in</span> <span class="py-var">frase_cifrata</span>:
+        <span class="py-kw">if</span> <span class="py-var">lettera</span> <span class="py-kw">in</span> <span class="py-var">alfabeto</span>:
+            <span class="py-var">posizione</span> <span class="py-op">=</span> <span class="py-var">alfabeto</span>.<span class="py-fn">index</span>(<span class="py-var">lettera</span>)
+            <span class="py-var">nuova_pos</span> <span class="py-op">=</span> (<span class="py-var">posizione</span> <span class="py-op">-</span> <span class="py-var">chiave</span>) <span class="py-op">%</span> <span class="py-num">26</span>
+            <span class="py-var">frase_decifrata</span> <span class="py-op">+=</span> <span class="py-var">alfabeto</span>[<span class="py-var">nuova_pos</span>]
+        <span class="py-kw">else</span>:
+            <span class="py-var">frase_decifrata</span> <span class="py-op">+=</span> <span class="py-var">lettera</span>
+
+    <span class="py-fn">print</span>(<span class="py-str">f"Chiave -</span>{<span class="py-var">chiave</span>:<span class="py-num">02d</span>}<span class="py-str">: </span>{<span class="py-var">frase_decifrata</span>}<span class="py-str">"</span>)</code></pre>
+        </div>
+
+        <!-- Barra inferiore con pulsante Esegui -->
+        <div class="px-4 sm:px-6 py-3.5 bg-slate-950/90 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <span class="text-xs text-slate-400">
+            2 cicli <code class="font-cyber-mono text-amber-300">for</code> annidati: 25 chiavi &times; 81 caratteri = 2.025 operazioni.
+          </span>
+          <button type="button" id="btn-run-bruteforce"
+                  class="btn-cyber-amber px-5 py-2.5 rounded-xl text-slate-950 font-extrabold text-xs sm:text-sm tracking-wide inline-flex items-center justify-center gap-2 cursor-pointer shrink-0">
+            <span aria-hidden="true">▶</span>
+            <span>Esegui Brute Force</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TERMINALE OUTPUT SIMULATO (5 colonne) -->
+      <div class="lg:col-span-5 python-window rounded-3xl overflow-hidden flex flex-col">
+        <div class="python-window-bar px-4 py-3 flex items-center justify-between border-b border-slate-800">
+          <span class="font-cyber-mono text-xs text-emerald-400 font-semibold">
+            &gt;_ Output Terminale (25 tentativi)
+          </span>
+          <span id="terminal-status-badge" class="font-cyber-mono text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-400">
+            Pronto
+          </span>
+        </div>
+
+        <div id="terminal-output"
+             class="p-4 bg-[#050811] font-cyber-mono text-xs leading-relaxed text-slate-300 overflow-y-auto h-[340px] lg:h-auto lg:flex-1 space-y-1.5">
+          <p class="text-slate-500">$ python3 brute_force_cesare.py</p>
+          <p class="text-slate-400">Premi <strong class="text-amber-300">«Esegui Brute Force»</strong> per lanciare il ciclo <code class="text-sky-400">for</code> e vedere tutte le 25 decodifiche...</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Contenitore dinamico del Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Toast informativo -->
+  <div id="preview-toast" role="status" aria-live="polite"
+       class="fixed bottom-5 right-5 left-5 sm:left-auto sm:max-w-md z-50 hidden transform transition-all duration-300">
+    <div class="rounded-2xl bg-slate-900/95 border border-emerald-400/60 p-4 shadow-2xl backdrop-blur-md flex items-start gap-3">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-cyber-mono font-bold">
+        &gt;_
+      </div>
+      <div class="flex-1 text-sm">
+        <p class="font-bold text-white" id="toast-title">Avviso</p>
+        <p class="text-slate-300 mt-1" id="toast-body"></p>
+      </div>
+      <button type="button" id="toast-close" class="text-slate-400 hover:text-white p-1 cursor-pointer" aria-label="Chiudi avviso">
+        &times;
+      </button>
+    </div>
+  </div>
+
+  <!-- Script separati -->
+  <script src="js/navbar.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/bruteforce.js"></script>
+</body>
+</html>

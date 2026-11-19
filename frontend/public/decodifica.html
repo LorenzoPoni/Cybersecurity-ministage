@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fase 02: Decodifica — Cyber Security | Lab Pascal</title>
+  <!-- Caricamento Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fogli di stile separati -->
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/decodifica.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+</head>
+<body class="cyber-grid-bg min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-slate-950">
+
+  <!-- Contenitore dinamico della Barra di Navigazione -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- ========================================================================
+       CONTENUTO PRINCIPALE — FASE 02: DECODIFICA
+       ======================================================================== -->
+  <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+
+    <!-- INTESTAZIONE MISSIONE + BARRA AVANZAMENTO + TASTO TORNA ALLA HOME BLOCCATO -->
+    <section class="glass-card rounded-3xl p-5 sm:p-7">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+
+        <!-- Titolo e descrizione Fase 02 -->
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-300 font-cyber-mono text-xs tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+            FASE 02 // MISSIONE DECODIFICA
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Decifra la Parola Segreta
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base max-w-2xl">
+            Intercetta un messaggio cifrato, ruota il <strong class="text-sky-400">Disco di Cesare</strong> sulla chiave indicata e torna indietro dall'<strong class="text-emerald-400">anello interno</strong> a quello <strong class="text-sky-400">esterno</strong>. Decodifica <strong class="text-sky-300">3 parole</strong> per sbloccare il ritorno alla Home!
+          </p>
+        </div>
+
+        <!-- Avanzamento (0/3) + Pulsante Torna alla Home con Lucchetto sopra -->
+        <div class="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-4 shrink-0">
+
+          <!-- Indicatori 3 parole completate -->
+          <div class="bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3">
+            <span class="font-cyber-mono text-xs uppercase tracking-wider text-slate-400">Obiettivo:</span>
+            <div class="flex items-center gap-1.5" id="progress-dots" aria-label="Avanzamento parole decodificate">
+              <span data-slot="1" class="progress-slot w-7 h-7 rounded-lg border border-slate-700 bg-slate-900 flex items-center justify-center font-cyber-mono text-xs font-bold text-slate-500">1</span>
+              <span data-slot="2" class="progress-slot w-7 h-7 rounded-lg border border-slate-700 bg-slate-900 flex items-center justify-center font-cyber-mono text-xs font-bold text-slate-500">2</span>
+              <span data-slot="3" class="progress-slot w-7 h-7 rounded-lg border border-slate-700 bg-slate-900 flex items-center justify-center font-cyber-mono text-xs font-bold text-slate-500">3</span>
+            </div>
+            <span id="progress-counter-text" class="font-cyber-mono text-sm font-extrabold text-sky-400 ml-1">
+              0/3
+            </span>
+          </div>
+
+          <!-- PULSANTE TORNA ALLA HOME CON LUCCHETTO SOVRAPPOSTO -->
+          <div class="relative pt-3">
+            <!-- Badge Lucchetto posizionato sopra il tasto -->
+            <div id="home-lock-badge"
+                 class="lock-badge-locked absolute -top-0.5 left-1/2 -translate-x-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center shadow-lg transition-all duration-300"
+                 title="Bloccato: decodifica 3 parole per sbloccare">
+              <!-- Icona Lucchetto Chiuso -->
+              <svg id="icon-padlock-closed" class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+              </svg>
+              <!-- Icona Lucchetto Aperto (nascosta finché non si arriva a 3/3) -->
+              <svg id="icon-padlock-open" class="w-4 h-4 text-slate-950 hidden" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                <path d="M8 11V7a4 4 0 0 1 7.6-1.6"></path>
+              </svg>
+            </div>
+
+            <button type="button" id="btn-back-home" aria-disabled="true"
+                    class="btn-home-locked w-full sm:w-auto px-6 pt-4 pb-3 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-300">
+              <span>&larr; Torna alla Home</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- AREA OPERATIVA: COLONNA SINISTRA (SFIDA DECODIFICA) + COLONNA DESTRA (DISCO DI CESARE) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- COLONNA SINISTRA: GENERATORE PAROLA CIFRATA & VERIFICA SOLUZIONE -->
+      <div class="lg:col-span-6 space-y-6">
+
+        <!-- STEP 1: GENERA PAROLA CIFRATA RANDOM -->
+        <div class="glass-card rounded-3xl p-6 sm:p-7 space-y-5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-cyber-mono text-xs uppercase tracking-wider text-sky-400">
+              Step 01 // Messaggio Cifrato
+            </span>
+            <span id="word-category-badge"
+                  class="font-cyber-mono text-xs px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400">
+              In attesa...
+            </span>
+          </div>
+
+          <!-- Box visualizzazione Parola Cifrata Random + Chiave assegnata -->
+          <div id="random-word-box"
+               class="rounded-2xl bg-slate-950/85 border border-sky-500/30 p-5 sm:p-6 text-center space-y-4 transition-all">
+            <div class="space-y-1">
+              <p class="font-cyber-mono text-xs uppercase tracking-widest text-slate-400">
+                Parola cifrata da decodificare
+              </p>
+              <div id="target-word-display"
+                   class="font-cyber-mono text-3xl sm:text-4xl font-extrabold tracking-[0.22em] text-emerald-300 py-2 select-all">
+                ------
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800/90 flex items-center justify-center gap-3">
+              <span class="text-xs sm:text-sm text-slate-400">Chiave usata per cifrare:</span>
+              <span id="target-key-display"
+                    class="font-cyber-mono text-base sm:text-lg font-extrabold px-3.5 py-1 rounded-lg bg-sky-500/15 border border-sky-400/40 text-sky-300">
+                +--
+              </span>
+            </div>
+          </div>
+
+          <!-- Tasto per generare una parola cifrata random (Informatica / Meme) -->
+          <button type="button" id="btn-generate-word"
+                  class="btn-cyber-secondary w-full py-3.5 px-5 rounded-xl font-bold text-sm sm:text-base text-sky-200 flex items-center justify-center gap-2.5 cursor-pointer">
+            <span aria-hidden="true">📡</span>
+            <span>Genera parola cifrata (Tech / Meme)</span>
+          </button>
+        </div>
+
+        <!-- STEP 2: INSERISCI SOLUZIONE DECODIFICATA E VERIFICA -->
+        <div class="glass-card rounded-3xl p-6 sm:p-7 space-y-5">
+          <div class="flex items-center justify-between">
+            <span class="font-cyber-mono text-xs uppercase tracking-wider text-emerald-400">
+              Step 02 // Messaggio Originale in Chiaro
+            </span>
+            <span class="font-cyber-mono text-xs text-slate-400">Solo lettere A-Z</span>
+          </div>
+
+          <form id="verify-form" class="space-y-4" novalidate>
+            <div>
+              <label for="user-solution-input" class="block text-sm font-medium text-slate-300 mb-2">
+                Scrivi qui la parola decodificata (originale):
+              </label>
+              <input type="text"
+                     id="user-solution-input"
+                     name="solution"
+                     autocomplete="off"
+                     spellcheck="false"
+                     placeholder="Es. HACKER"
+                     class="w-full px-4 py-3.5 rounded-xl bg-slate-950/90 border border-slate-700 focus:border-sky-400 focus:ring-2 focus:ring-sky-400/25 outline-none font-cyber-mono text-xl sm:text-2xl font-bold tracking-[0.2em] uppercase text-sky-300 placeholder:text-slate-600 placeholder:tracking-normal placeholder:text-base transition" />
+            </div>
+
+            <button type="submit" id="btn-verify-answer"
+                    class="btn-cyber-primary w-full py-4 px-6 rounded-xl text-slate-950 font-extrabold text-base sm:text-lg tracking-wide flex items-center justify-center gap-2 cursor-pointer">
+              <span aria-hidden="true">🔓</span>
+              <span>Verifica risposta</span>
+            </button>
+          </form>
+
+          <!-- Area Feedback (Corretta / Sbagliata) -->
+          <div id="feedback-box" role="status" aria-live="polite"
+               class="hidden rounded-2xl p-4 border text-sm sm:text-base leading-relaxed transition-all">
+            <p id="feedback-title" class="font-bold"></p>
+            <p id="feedback-message" class="mt-1 text-xs sm:text-sm"></p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLONNA DESTRA: DISCO DI CESARE INTERATTIVO PER AIUTARE NELLA DECODIFICA -->
+      <div class="lg:col-span-6">
+        <div class="glass-card rounded-3xl p-5 sm:p-7 relative overflow-hidden">
+          <!-- Intestazione card disco -->
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-cyber-mono text-xs uppercase tracking-wider text-sky-400">
+              Strumento // Disco di Cesare
+            </span>
+            <span id="badge-chiave" class="font-cyber-mono text-xs px-2.5 py-1 rounded-md bg-sky-500/15 border border-sky-400/40 text-sky-300">
+              CHIAVE: +0
+            </span>
+          </div>
+
+          <!-- SVG Vettoriale del Disco Cifrante (26 lettere A-Z) -->
+          <div class="relative w-full max-w-[360px] mx-auto my-2 select-none">
+            <svg id="caesar-wheel-svg" viewBox="0 0 440 440" class="w-full h-auto drop-shadow-[0_0_25px_rgba(56,189,248,0.18)]" role="img" aria-label="Disco cifrante interattivo di Cesare con alfabeto A-Z">
+              <defs>
+                <radialGradient id="wheelBg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0f172a" />
+                  <stop offset="70%" stop-color="#0b1324" />
+                  <stop offset="100%" stop-color="#060b16" />
+                </radialGradient>
+                <linearGradient id="ringHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7" />
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.7" />
+                </linearGradient>
+              </defs>
+
+              <!-- Base circolare esterna -->
+              <circle cx="220" cy="220" r="208" fill="url(#wheelBg)" stroke="url(#ringHighlight)" stroke-width="2.5" />
+              <circle cx="220" cy="220" r="198" fill="none" stroke="rgba(56, 189, 248, 0.22)" stroke-width="1" />
+
+              <!-- Gruppo Anello Esterno (Testo in Chiaro - FISSO) -->
+              <g id="outer-wheel-group"></g>
+
+              <!-- Anello separatore centrale -->
+              <circle cx="220" cy="220" r="148" fill="#081020" stroke="#38bdf8" stroke-width="2" stroke-opacity="0.6" />
+
+              <!-- Gruppo Anello Interno (Testo Cifrato - RUOTA CON LA CHIAVE) -->
+              <g id="inner-wheel-group"></g>
+
+              <!-- Mozzo centrale del disco -->
+              <circle cx="220" cy="220" r="88" fill="#070d19" stroke="#38bdf8" stroke-width="2" />
+              <circle cx="220" cy="220" r="78" fill="none" stroke="rgba(56, 189, 248, 0.25)" stroke-dasharray="4 4" stroke-width="1.5" />
+
+              <!-- Testi al centro del disco -->
+              <text x="220" y="198" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="monospace" letter-spacing="2">DECODIFICA</text>
+              <text id="wheel-center-key" x="220" y="232" text-anchor="middle" fill="#38bdf8" font-size="34" font-weight="800" font-family="monospace">+0</text>
+              <text id="wheel-center-map" x="220" y="256" text-anchor="middle" fill="#10b981" font-size="13" font-weight="700" font-family="monospace">A &#10132; A</text>
+
+              <!-- Finestra mirino superiore (ore 12) -->
+              <rect x="201" y="14" width="38" height="126" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="2.2" />
+              <polygon points="220,6 213,15 227,15" fill="#38bdf8" />
+            </svg>
+          </div>
+
+          <!-- Controlli per ruotare il disco -->
+          <div class="mt-4 pt-4 border-t border-slate-800 space-y-3">
+            <div class="flex items-center justify-between text-xs font-cyber-mono">
+              <span class="text-slate-400">🎚️ Imposta la chiave sul disco</span>
+              <span id="slider-value-badge" class="px-2.5 py-0.5 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-300 font-bold">
+                +0 posizioni
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3">
+              <button type="button" id="btn-key-minus" aria-label="Diminuisci chiave di 1"
+                      class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold transition cursor-pointer">
+                &minus;
+              </button>
+
+              <div class="flex-1 flex flex-col gap-1">
+                <input id="key-slider" type="range" min="0" max="25" step="1" value="0" class="cyber-slider w-full" aria-label="Seleziona chiave di spostamento manuale da 0 a 25" />
+                <div class="flex justify-between text-[11px] font-cyber-mono text-slate-400 px-1">
+                  <span>0</span>
+                  <span>5</span>
+                  <span>10</span>
+                  <span>15</span>
+                  <span>20</span>
+                  <span>25</span>
+                </div>
+              </div>
+
+              <button type="button" id="btn-key-plus" aria-label="Aumenta chiave di 1"
+                      class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold transition cursor-pointer">
+                +
+              </button>
+            </div>
+
+            <!-- Legenda rapida per decodifica -->
+            <p id="wheel-live-caption" class="text-center text-xs sm:text-sm text-slate-300 bg-slate-950/70 rounded-xl py-2.5 px-3 border border-slate-800">
+              Cerca la lettera cifrata nell'<strong class="text-emerald-400">anello interno</strong> e leggi l'originale nell'<strong class="text-sky-400">anello esterno</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Contenitore dinamico del Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Toast informativo non bloccante (es. avviso blocco uscita prima delle 3 parole) -->
+  <div id="preview-toast" role="status" aria-live="polite"
+       class="fixed bottom-5 right-5 left-5 sm:left-auto sm:max-w-md z-50 hidden transform transition-all duration-300">
+    <div class="rounded-2xl bg-slate-900/95 border border-amber-400/60 p-4 shadow-2xl backdrop-blur-md flex items-start gap-3">
+      <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 mt-0.5 font-cyber-mono font-bold">
+        🔒
+      </div>
+      <div class="flex-1 text-sm">
+        <p class="font-bold text-white" id="toast-title">Accesso bloccato</p>
+        <p class="text-slate-300 mt-1" id="toast-body"></p>
+      </div>
+      <button type="button" id="toast-close" class="text-slate-400 hover:text-white p-1 cursor-pointer" aria-label="Chiudi avviso">
+        &times;
+      </button>
+    </div>
+  </div>
+
+  <!-- Script separati -->
+  <script src="js/navbar.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/decodifica.js"></script>
+</body>
+</html>

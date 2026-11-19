@@ -1,0 +1,105 @@
+/* ==========================================================================
+   STILI PAGINA FASE 03: BRUTE FORCE PYTHON (bruteforce.css)
+   ========================================================================== */
+
+:root {
+  --bg-deep: #090e1a;
+  --card-bg: rgba(17, 24, 39, 0.78);
+  --emerald-glow: #10b981;
+  --cyan-glow: #38bdf8;
+  --amber-glow: #f59e0b;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: #f1f5f9;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-cyber-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Griglia Cyber sottile sullo sfondo */
+.cyber-grid-bg {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.10) 0%, transparent 45%),
+    linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* Card in vetro scuro */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Finestra stile IDE / Terminale Python */
+.python-window {
+  background-color: #070b14;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.85);
+}
+
+.python-window-bar {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+/* Evidenziazione sintassi Python */
+.py-kw {
+  color: #f472b6;
+  font-weight: 700;
+}
+
+.py-fn {
+  color: #38bdf8;
+}
+
+.py-var {
+  color: #e2e8f0;
+}
+
+.py-str {
+  color: #34d399;
+}
+
+.py-num {
+  color: #fbbf24;
+}
+
+.py-op {
+  color: #94a3b8;
+}
+
+.py-comment {
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Bottone azione ambra */
+.btn-cyber-amber {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.35);
+  transition: all 0.22s ease;
+}
+
+.btn-cyber-amber:hover {
+  background: linear-gradient(135deg, #fde047 0%, #fbbf24 100%);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Riga chiave trovata nel terminale */
+.terminal-row-match {
+  background-color: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  color: #6ee7b7;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.5rem;
+}
