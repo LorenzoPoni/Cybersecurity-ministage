@@ -8,6 +8,7 @@
   const CENTER = 220;
   const REQUIRED_WORDS = 3;
 
+// Dizionario di parole (solo lettere A-Z, tema Informatica e Meme recenti)
   const WORD_BANK = [
     // Informatica & Cyber Security
     { word: "HACKER", category: "Informatica" },
@@ -33,9 +34,9 @@
     { word: "BOTNET", category: "Informatica" },
 
     // Meme & Trend recenti
-    { word: "BRAINROT", category: "Meme" },
-    { word: "TRALALERO", category: "Meme" },
-    { word: "BOMBARDIRO", category: "Meme" },
+    { word: "FORTNITE", category: "Meme" },
+    { word: "GTAVI", category: "Meme" },
+    { word: "LARP", category: "Meme" },
     { word: "TUNGTUNG", category: "Meme" },
     { word: "CHILLGUY", category: "Meme" },
     { word: "MEWING", category: "Meme" },
@@ -43,10 +44,10 @@
     { word: "AURA", category: "Meme" },
     { word: "COOKED", category: "Meme" },
     { word: "YAPPING", category: "Meme" },
-    { word: "DELULU", category: "Meme" },
+    { word: "BRUH", category: "Meme" },
     { word: "POOKIE", category: "Meme" },
-    { word: "DEMURE", category: "Meme" },
-    { word: "FANUM", category: "Meme" },
+    { word: "GANG", category: "Meme" },
+    { word: "VBUCK", category: "Meme" },
     { word: "OHIO", category: "Meme" },
     { word: "GLAZING", category: "Meme" },
     { word: "LOCKIN", category: "Meme" },
@@ -54,9 +55,8 @@
     { word: "SIGMA", category: "Meme" },
     { word: "RIZZ", category: "Meme" },
     { word: "GOATED", category: "Meme" },
-    { word: "SLAY", category: "Meme" },
+    { word: "DAMN", category: "Meme" },
     { word: "NPC", category: "Meme" },
-    { word: "CRINGE", category: "Meme" }
   ];
 
   // Stato della sfida
